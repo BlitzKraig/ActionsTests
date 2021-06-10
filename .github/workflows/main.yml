@@ -18,7 +18,7 @@ jobs:
       run: echo "::set-output name=body::$(node ./.github/workflows/get-body.js)"
     - name: Update Module JSON Latest
       shell: bash
-      run: node ./.github/workflows/update-manifest-latest.js
+      run: node ./.github/workflows/update-manifest.js latest
     - run: zip -r ./communitylighting-release.zip module.json
     - name: Delete Release
       id: delete_release
@@ -41,6 +41,11 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './module.json,./communitylighting-release.zip'
         tag: latest
+    - name: Update Module JSON Tagged
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js ${{ steps.get-version.outputs.version }}
+    - run: rm ./communitylighting-release.zip
+    - run: zip -r ./communitylighting-release.zip module.json
     - name: Delete Versioned Release
       id: delete_versioned_release
       continue-on-error: true
