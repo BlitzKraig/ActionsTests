@@ -1,33 +1,16 @@
 {
-  "name": "CommunityLighting",
-  "title": "CommunityLighting by Blitz",
-  "description": "Community Lighting Module for ambient light animations! Add your lights via GitHub PR, or just use the lights added by others in your games!",
+  "name": "ActionsTests",
+  "title": "ActionsTests by Blitz",
+  "description": "Testing GH Actions",
   "version": "",
   "releaseBody":"",
   "author": "Blitzkraig",
-  "scripts": ["./communitylighting.js", "./modules/communitylightingsettings.js", "./modules/animationmanager.js", "./modules/custompropertymanager.js", "./modules/animationhelpers.js", "./modules/audioreact.js", "./modules/audioreact_old.js", "./modules/animations.js", "./modules/preanimations.js", "./modules/shaders.js", "./modules/monkeypatcher.js", "./dependencies/chroma.min.js", "./dependencies/pixi-filters.js"],
+  "scripts": [],
   "styles": [],
   "packs": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-	  {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "lang/pt-BR.json"
-    },
-	{
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    }
-  ],
   "minimumCoreVersion": "",
   "compatibleCoreVersion": "",
-  "url": "https://github.com/BlitzKraig/fvtt-CommunityLighting",
-  "manifest": "https://github.com/BlitzKraig/fvtt-CommunityLighting/releases/download/REPLACE_TAG/module.json",
-  "download": "https://github.com/BlitzKraig/fvtt-CommunityLighting/releases/download/REPLACE_TAG/communitylighting-release.zip"
+  "url": "https://github.com/BlitzKraig/ActionsTests",
+  "manifest": "https://github.com/BlitzKraig/ActionsTests/releases/download/REPLACE_TAG/module.json",
+  "download": "https://github.com/BlitzKraig/ActionsTests/download/REPLACE_TAG/communitylighting-release.zip"
 }
