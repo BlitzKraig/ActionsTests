@@ -4,7 +4,7 @@
 
 - Set up `module.json` as normal. Once it's been set up, you shouldn't need to touch it again.
 - On project creation, set up `module-slugs.json`. You shouldn't need to change this again either.
-- Set up `module-release.json`. All of your release versioning data will go here.
+- Set up `module-versions.json`. All of your release versioning data will go here.
 - Add `latest-changes.md`. Add the release notes here.
   
 ## YML
@@ -36,10 +36,10 @@ Read module-slugs.json, log out `downloadName` so the yml file can grab it
 
 ### get-version.js
 
-Read module-release.json, log out `version` so the yml file can grab it
+Read module-versions.json, log out `version` so the yml file can grab it
 
 ### update-manifest.js
 
-Construct a new `manifest.json` using data from `module-slugs.json`, `module-release.json` and `module.json`, then overwrite `module.json` with the new data.
+Construct a new `manifest.json` using data from `module-slugs.json`, `module-versions.json` and `module.json`, then overwrite `module.json` with the new data.
 It will accept a single argument to specify a custom tag, or will revert to the module version if this isn't passed in.
 This lets us pass in `latest` when creating the production release.

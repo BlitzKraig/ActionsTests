@@ -1,4 +1,4 @@
-name: CommunityLighting Release
+name: ActionsTests Release
 
 on: 
   push:
