@@ -1,5 +1,7 @@
 # Testing GitHub Actions for FVTT releases
 
+[![ActionsTests Release](https://github.com/BlitzKraig/ActionsTests/actions/workflows/main.yml/badge.svg)](https://github.com/BlitzKraig/ActionsTests/actions/workflows/main.yml)
+
 ## Current Implementation - Setup
 
 - Set up `module.json` as normal. Once it's been set up, you shouldn't need to touch it again.
