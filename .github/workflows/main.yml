@@ -15,10 +15,6 @@ jobs:
       shell: bash
       id: get-version
       run: echo "::set-output name=version::$(node ./.github/workflows/get-version.js)"
-    - name: Get Body
-      shell: bash
-      id: get-body
-      run: echo "::set-output name=body::$(node ./.github/workflows/get-body.js)"
     - run: zip -r ./communitylighting-release.zip module.json
     - name: Delete Release
       id: delete_release
@@ -35,7 +31,7 @@ jobs:
       with:
         allowUpdates: true
         name: Release ${{ steps.get-version.outputs.version }}
-        body: ${{ steps.get-body.outputs.body}}
+        bodyfile: latest-changes.md
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
