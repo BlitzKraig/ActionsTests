@@ -2,7 +2,7 @@
 
 ## New fixes
 
-* Fixed one thing
-* Fixed another
+* Fixed more stuff!!!
+* Wow, so many fixes
 
 Ciao!

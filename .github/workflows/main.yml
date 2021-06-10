@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Update Module JSON Tagged
       shell: bash
-      run: node ./.github/workflows/update-manifest.js ${{ steps.get-version.outputs.version }}
+      run: node ./.github/workflows/update-manifest.js
     - name: Get Version
       shell: bash
       id: get-version
