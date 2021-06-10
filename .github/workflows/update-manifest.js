@@ -11,7 +11,7 @@ const output = Object.assign({}, originalManifest, newValues);
 fs.writeFileSync('module.json', JSON.stringify(output, {}, 2));
 
 var changelog = fs.readFileSync('latest-changes.md', 'utf8');
-if(process.argv[2]){
+if(!process.argv[2]){
 changelog += `
 
 Archived Manifest Link: ${newValues.manifest}`
