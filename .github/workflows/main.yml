@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Update Module JSON Latest
       shell: bash
-      run: node ./.github/workflows/update-manifest.js "\\$TAG" "latest"
+      run: node ./.github/workflows/update-manifest.js "REPLACE_TAG" "latest"
     - name: Get Version
       shell: bash
       id: get-version
