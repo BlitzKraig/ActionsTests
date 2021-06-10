@@ -1,0 +1,70 @@
+name: CommunityLighting Release
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'master')
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Version
+      shell: bash
+      id: get-version
+      run: echo "::set-output name=version::$(node ./.github/workflows/get-version.js)"
+    - name: Get Body
+      shell: bash
+      id: get-body
+      run: echo "::set-output name=body::$(node ./.github/workflows/get-body.js)"
+    - name: Update Module JSON Latest
+      shell: bash
+      run: node ./.github/workflows/update-manifest-latest.js
+    - run: zip -r ./communitylighting-release.zip module.json
+    - name: Delete Release
+      id: delete_release
+      continue-on-error: true
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      id: create_release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Release ${{ steps.get-version.outputs.version }}
+        body: ${{ steps.get-body.outputs.body}}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json,./communitylighting-release.zip'
+        tag: latest
+    - name: Delete Versioned Release
+      id: delete_versioned_release
+      continue-on-error: true
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: ${{ steps.get-version.outputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Update Module Info
+      id: update_module_info
+      uses: ./.github/actions/replace
+      with:
+        files: module.json
+        replacements: '$TAG=${{ steps.get-version.outputs.version }}'
+    - name: Create Versioned Release
+      id: create_versioned_release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Archived Release ${{ steps.get-version.outputs.version }}
+        body: ${{ steps.get-body.outputs.body}}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json,./communitylighting-release.zip'
+        tag: ${{ steps.get-version.outputs.version }}
