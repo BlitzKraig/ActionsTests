@@ -8,9 +8,6 @@ jobs:
     if: endsWith(github.ref, 'master')
     steps:
     - uses: actions/checkout@v2
-    - name: Update Module JSON Tagged
-      shell: bash
-      run: node ./.github/workflows/update-manifest.js
     - name: Get Version
       shell: bash
       id: get-version
@@ -21,9 +18,9 @@ jobs:
       run: echo "::set-output name=download::$(node ./.github/workflows/get-download-name.js)"
 
       # TAGGED
-    # - name: Update Module JSON Tagged
-    #   shell: bash
-    #   run: node ./.github/workflows/update-manifest.js ${{ steps.get-version.outputs.version }}
+    - name: Update Module JSON Tagged
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js
     - run: zip -r ./${{ steps.get-download.outputs.download }} module.json
     - name: Delete Versioned Release
       id: delete_versioned_release

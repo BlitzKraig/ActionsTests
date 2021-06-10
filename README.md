@@ -20,7 +20,7 @@ It will:
 5. Zip the "versioned" module for archival. Uses download name envar for zip name
 6. Ensure a release for this version doesn't exist. Delete it if so. - We delete and re-create it since updating the release doesn't modify the date
 7. Create a new release using our "versioned" module.json and zip. Use `latest-changes.md` as the release body
-8. Update `module.json` using `update-manifes.js`, creating a "latest" module.json
+8. Update `module.json` using `update-manifest.js`, creating a "latest" module.json
 9. Remove the previous versioned zip
 10. Zip the "latest" module for production. Uses download name envar for zip name
 11. Delete the previous "latest" release if it exists
@@ -36,8 +36,10 @@ Read module-slugs.json, log out `downloadName` so the yml file can grab it
 
 ### get-version.js
 
-Read module.json, log out `version` so the yml file can grab it
+Read module-release.json, log out `version` so the yml file can grab it
 
 ### update-manifest.js
 
-Construct a new `manifest.json` using data from `module-slugs.json`, `module-release.json` and `module.json`, then overwrite `module.json` with the new data
+Construct a new `manifest.json` using data from `module-slugs.json`, `module-release.json` and `module.json`, then overwrite `module.json` with the new data.
+It will accept a single argument to specify a custom tag, or will revert to the module version if this isn't passed in.
+This lets us pass in `latest` when creating the production release.
