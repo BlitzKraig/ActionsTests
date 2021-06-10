@@ -1,7 +1,10 @@
 var fs = require('fs');
-var newValues = JSON.parse(fs.readFileSync('module-release.json', 'utf8'))
-console.log(process.argv[2]);
-var originalManifest = JSON.parse(fs.readFileSync('module.json', 'utf8').replace(new RegExp(process.argv[2]||'REPLACE_TAG', 'g'), process.argv[3]||'latest'))
+var slugs = JSON.parse(fs.readFileSync('module-slugs.json', 'utf8'));
+var newValues = JSON.parse(fs.readFileSync('module-release.json', 'utf8'));
+newValues.manifest = `${slugs.releaseUrl}${process.argv[2]||latest}/${slugs.manifestName}`;
+newValues.download = `${slugs.releaseUrl}${process.argv[2]||latest}/${slugs.downloadName}`;
+var originalManifest = JSON.parse(fs.readFileSync('module.json', 'utf8'));
+
 const output = Object.assign({}, originalManifest, newValues);
 
 

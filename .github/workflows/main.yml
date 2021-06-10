@@ -8,14 +8,48 @@ jobs:
     if: endsWith(github.ref, 'master')
     steps:
     - uses: actions/checkout@v2
-    - name: Update Module JSON Latest
-      shell: bash
-      run: node ./.github/workflows/update-manifest.js "REPLACE_TAG" "latest"
     - name: Get Version
       shell: bash
       id: get-version
       run: echo "::set-output name=version::$(node ./.github/workflows/get-version.js)"
-    - run: zip -r ./communitylighting-release.zip module.json
+    - name: Get Download Name
+      shell: bash
+      id: get-download
+      run: echo "::set-output name=download::$(node ./.github/workflows/get-download-name.js)"
+
+      # TAGGED
+    - name: Update Module JSON Tagged
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js ${{ steps.get-version.outputs.version }}
+    - run: zip -r ./${{ steps.get-download.outputs.download }} module.json
+    - name: Delete Versioned Release
+      id: delete_versioned_release
+      continue-on-error: true
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: ${{ steps.get-version.outputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Versioned Release
+      id: create_versioned_release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Archived Release ${{ steps.get-version.outputs.version }}
+        bodyfile: latest-changes.md
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json,./${{ steps.get-download.outputs.download }}'
+        tag: ${{ steps.get-version.outputs.version }}
+
+      # LATEST
+    - name: Update Module JSON Latest
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js latest
+    - run: rm ./${{ steps.get-download.outputs.download }}
+    - run: zip -r ./${{ steps.get-download.outputs.download }} module.json
     - name: Delete Release
       id: delete_release
       continue-on-error: true
@@ -35,31 +69,6 @@ jobs:
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json,./communitylighting-release.zip'
+        artifacts: './module.json,./${{ steps.get-download.outputs.download }}'
         tag: latest
-    - name: Update Module JSON Tagged
-      shell: bash
-      run: node ./.github/workflows/update-manifest.js "/latest/" "/${{ steps.get-version.outputs.version }}/"
-    - run: rm ./communitylighting-release.zip
-    - run: zip -r ./communitylighting-release.zip module.json
-    - name: Delete Versioned Release
-      id: delete_versioned_release
-      continue-on-error: true
-      uses: dev-drprasad/delete-tag-and-release@v0.2.0
-      with:
-        delete_release: true
-        tag_name: ${{ steps.get-version.outputs.version }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create Versioned Release
-      id: create_versioned_release
-      uses: ncipollo/release-action@v1
-      with:
-        allowUpdates: true
-        name: Archived Release ${{ steps.get-version.outputs.version }}
-        body: ${{ steps.get-body.outputs.body}}
-        draft: false
-        prerelease: false
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json,./communitylighting-release.zip'
-        tag: ${{ steps.get-version.outputs.version }}
+
