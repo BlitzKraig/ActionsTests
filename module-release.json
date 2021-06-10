@@ -1,5 +1,5 @@
 {
-    "version": "0.4.1",
+    "version": "0.4.2",
     "releaseBody":"Minor bugfix 2",
     "minimumCoreVersion": "0.8.6",
     "compatibleCoreVersion": "0.8.6"
