@@ -1,2 +1,2 @@
 var fs = require('fs');
-console.log(JSON.parse(fs.readFileSync('module.json', 'utf8')).releaseBody);
+console.log(fs.readFileSync('latest-changes.md', 'utf8'));

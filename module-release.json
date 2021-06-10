@@ -1,6 +1,5 @@
 {
     "version": "0.4.3",
-    "releaseBody":"Added cool new things\nTest new line?\nMaybe we can make this nicer...",
     "minimumCoreVersion": "0.8.6",
     "compatibleCoreVersion": "0.8.9"
 }
