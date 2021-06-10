@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Update Module JSON Latest
       shell: bash
-      run: node ./.github/workflows/update-manifest.js latest
+      run: node ./.github/workflows/update-manifest.js $TAG latest
     - name: Get Version
       shell: bash
       id: get-version
@@ -41,12 +41,9 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './module.json,./communitylighting-release.zip'
         tag: latest
-    - name: Sleep for 10 seconds
-      run: sleep 10s
-      shell: bash
     - name: Update Module JSON Tagged
       shell: bash
-      run: node ./.github/workflows/update-manifest.js ${{ steps.get-version.outputs.version }}
+      run: node ./.github/workflows/update-manifest.js /latest/ ${{ steps.get-version.outputs.version }}
     - run: rm ./communitylighting-release.zip
     - run: zip -r ./communitylighting-release.zip module.json
     - name: Delete Versioned Release

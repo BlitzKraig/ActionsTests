@@ -1,6 +1,6 @@
 {
-    "version": "0.4.2",
-    "releaseBody":"Minor bugfix 2",
+    "version": "0.4.3",
+    "releaseBody":"Added cool new things",
     "minimumCoreVersion": "0.8.6",
-    "compatibleCoreVersion": "0.8.6"
+    "compatibleCoreVersion": "0.8.9"
 }
