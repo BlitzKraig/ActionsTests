@@ -8,6 +8,9 @@ jobs:
     if: endsWith(github.ref, 'master')
     steps:
     - uses: actions/checkout@v2
+    - name: Update Module JSON Latest
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js latest
     - name: Get Version
       shell: bash
       id: get-version
@@ -16,9 +19,6 @@ jobs:
       shell: bash
       id: get-body
       run: echo "::set-output name=body::$(node ./.github/workflows/get-body.js)"
-    - name: Update Module JSON Latest
-      shell: bash
-      run: node ./.github/workflows/update-manifest.js latest
     - run: zip -r ./communitylighting-release.zip module.json
     - name: Delete Release
       id: delete_release
@@ -55,12 +55,6 @@ jobs:
         tag_name: ${{ steps.get-version.outputs.version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Update Module Info
-      id: update_module_info
-      uses: ./.github/actions/replace
-      with:
-        files: module.json
-        replacements: '$TAG=${{ steps.get-version.outputs.version }}'
     - name: Create Versioned Release
       id: create_versioned_release
       uses: ncipollo/release-action@v1
