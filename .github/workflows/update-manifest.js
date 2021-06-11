@@ -19,7 +19,7 @@ Archived Manifest Link: ${newValues.manifest}`;
 } else if(process.argv[2] == 'dev') {
     changelog = `# Dev Release: Unstable!
 
-[Stable Release](${slugs.repoUrl}/releases/tag/latest)`;
+[Stable Release](${slugs.repoUrl}/releases/tag/live)`;
 } else {
     changelog += `
     

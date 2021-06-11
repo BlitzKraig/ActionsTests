@@ -49,10 +49,10 @@ jobs:
         artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
         tag: ${{ steps.get-version.outputs.version }}
 
-      # LATEST
+      # live
     - name: Update Module JSON Latest
       shell: bash
-      run: node ./.github/workflows/update-manifest.js latest
+      run: node ./.github/workflows/update-manifest.js live
     - run: rm ./${{ steps.get-download-output.outputs.download }}
     - run: zip -r ./${{ steps.get-download-output.outputs.download }} ${{ steps.get-download-input.outputs.files }}
     - name: Delete Release
@@ -61,7 +61,7 @@ jobs:
       uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
         delete_release: true
-        tag_name: latest
+        tag_name: live
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
@@ -75,5 +75,5 @@ jobs:
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
-        tag: latest
+        tag: live
 
