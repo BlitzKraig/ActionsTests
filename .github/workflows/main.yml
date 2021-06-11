@@ -50,30 +50,30 @@ jobs:
         tag: ${{ steps.get-version.outputs.version }}
 
       # LATEST
-    # - name: Update Module JSON Latest
-    #   shell: bash
-    #   run: node ./.github/workflows/update-manifest.js latest
-    # - run: rm ./${{ steps.get-download-output.outputs.download }}
-    # - run: zip -r ./${{ steps.get-download-output.outputs.download }} ${{ steps.get-download-input.outputs.files }}
-    # - name: Delete Release
-    #   id: delete_release
-    #   continue-on-error: true
-    #   uses: dev-drprasad/delete-tag-and-release@v0.2.0
-    #   with:
-    #     delete_release: true
-    #     tag_name: latest
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    # - name: Create Release
-    #   id: create_release
-    #   uses: ncipollo/release-action@v1
-    #   with:
-    #     allowUpdates: true
-    #     name: Release ${{ steps.get-version.outputs.version }}
-    #     bodyfile: latest-changes.md
-    #     draft: false
-    #     prerelease: false
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
-    #     tag: latest
+    - name: Update Module JSON Latest
+      shell: bash
+      run: node ./.github/workflows/update-manifest.js latest
+    - run: rm ./${{ steps.get-download-output.outputs.download }}
+    - run: zip -r ./${{ steps.get-download-output.outputs.download }} ${{ steps.get-download-input.outputs.files }}
+    - name: Delete Release
+      id: delete_release
+      continue-on-error: true
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      id: create_release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        name: Release ${{ steps.get-version.outputs.version }}
+        bodyfile: latest-changes.md
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
+        tag: latest
 
