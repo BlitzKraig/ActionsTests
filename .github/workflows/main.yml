@@ -3,11 +3,10 @@ name: ActionsTests Release
 on: 
   push:
     branches:
-      - master
+      - production
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: endsWith(github.ref, 'master')
     steps:
     - uses: actions/checkout@v2
     - name: Get Version
@@ -16,14 +15,18 @@ jobs:
       run: echo "::set-output name=version::$(node ./.github/workflows/get-version.js)"
     - name: Get Download Name
       shell: bash
-      id: get-download
+      id: get-download-output
       run: echo "::set-output name=download::$(node ./.github/workflows/get-download-name.js)"
+    - name: Get Download Files
+      shell: bash
+      id: get-download-input
+      run: echo "::set-output name=files::$(node ./.github/workflows/get-download-files.js)"
 
       # TAGGED
     - name: Update Module JSON Tagged
       shell: bash
       run: node ./.github/workflows/update-manifest.js
-    - run: zip -r ./${{ steps.get-download.outputs.download }} module.json
+    - run: zip -r ./${{ steps.get-download-output.outputs.download }} ${{ steps.get-download-input.outputs.files }}
     - name: Delete Versioned Release
       id: delete_versioned_release
       continue-on-error: true
@@ -43,34 +46,34 @@ jobs:
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json,./${{ steps.get-download.outputs.download }}'
+        artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
         tag: ${{ steps.get-version.outputs.version }}
 
       # LATEST
-    - name: Update Module JSON Latest
-      shell: bash
-      run: node ./.github/workflows/update-manifest.js latest
-    - run: rm ./${{ steps.get-download.outputs.download }}
-    - run: zip -r ./${{ steps.get-download.outputs.download }} module.json
-    - name: Delete Release
-      id: delete_release
-      continue-on-error: true
-      uses: dev-drprasad/delete-tag-and-release@v0.2.0
-      with:
-        delete_release: true
-        tag_name: latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create Release
-      id: create_release
-      uses: ncipollo/release-action@v1
-      with:
-        allowUpdates: true
-        name: Release ${{ steps.get-version.outputs.version }}
-        bodyfile: latest-changes.md
-        draft: false
-        prerelease: false
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './module.json,./${{ steps.get-download.outputs.download }}'
-        tag: latest
+    # - name: Update Module JSON Latest
+    #   shell: bash
+    #   run: node ./.github/workflows/update-manifest.js latest
+    # - run: rm ./${{ steps.get-download-output.outputs.download }}
+    # - run: zip -r ./${{ steps.get-download-output.outputs.download }} ${{ steps.get-download-input.outputs.files }}
+    # - name: Delete Release
+    #   id: delete_release
+    #   continue-on-error: true
+    #   uses: dev-drprasad/delete-tag-and-release@v0.2.0
+    #   with:
+    #     delete_release: true
+    #     tag_name: latest
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Create Release
+    #   id: create_release
+    #   uses: ncipollo/release-action@v1
+    #   with:
+    #     allowUpdates: true
+    #     name: Release ${{ steps.get-version.outputs.version }}
+    #     bodyfile: latest-changes.md
+    #     draft: false
+    #     prerelease: false
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
+    #     tag: latest
 

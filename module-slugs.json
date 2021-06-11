@@ -1,5 +1,6 @@
 {
     "releaseUrl":"https://github.com/BlitzKraig/ActionsTests/releases/download/",
     "downloadName":"communitylighting-release.zip",
+    "downloadFiles": "module.json lights.json communitylighting.js dependencies/ lang/ modules/ templates/",
     "manifestName":"module.json"
 }

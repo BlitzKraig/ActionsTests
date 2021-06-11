@@ -7,18 +7,21 @@ var originalManifest = JSON.parse(fs.readFileSync('module.json', 'utf8'));
 
 const output = Object.assign({}, originalManifest, newValues);
 
-
 fs.writeFileSync('module.json', JSON.stringify(output, {}, 2));
 
 var changelog = fs.readFileSync('latest-changes.md', 'utf8');
-if(!process.argv[2]){
+// if(!process.argv[2]){
+// changelog += `
+
+// Archived Manifest Link: ${newValues.manifest}`
+// } else {
+//     changelog += `
+    
+// Manifest Link: ${newValues.manifest}`
+// }
 changelog += `
 
-Archived Manifest Link: ${newValues.manifest}`
-} else {
-    changelog += `
-    
-Manifest Link: ${newValues.manifest}`
-}
+Manifest Link: ${newValues.manifest}`;
+
 
 fs.writeFileSync('latest-changes.md', changelog);
