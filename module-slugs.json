@@ -1,5 +1,5 @@
 {
-    "releaseUrl":"https://github.com/BlitzKraig/ActionsTests/releases/download/",
+    "repoUrl":"https://github.com/BlitzKraig/ActionsTests",
     "downloadName":"actions-release.zip",
     "downloadFiles": "module.json zero.txt testdir/"
 }

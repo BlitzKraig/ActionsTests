@@ -42,7 +42,7 @@ jobs:
       with:
         allowUpdates: true
         name: Live Release ${{ steps.get-version.outputs.version }}
-        body: "Dev release: Unstable"
+        bodyfile: latest-changes.md
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
