@@ -92,6 +92,16 @@ jobs:
         noprefix: true
         title: ${{ steps.get-module-name.outputs.name }} Release ${{ steps.get-version.outputs.version }}
         description: | 
-          ${{ steps.get-latest-changes.outputs.changes }}
+          # Latest Release
+
+## New Features!
+
+* Added the ability to travel through time
+* Added the ability to travel through space
+* Added the ability to travel through time *and* space...
+* Updated for FVTT version 0.9.5
+
+Ciao!
+
         color: 0x0000ff
 
