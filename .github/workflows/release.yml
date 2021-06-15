@@ -21,6 +21,10 @@ jobs:
       shell: bash
       id: get-download-input
       run: echo "::set-output name=files::$(node ./.github/workflows/get-download-files.js)"
+    - name: Get Module Name
+      shell: bash
+      id: get-module-name
+      run: echo "::set-output name=name::$(node ./.github/workflows/get-module-name.js)"
 
       # TAGGED
     - name: Update Module JSON Tagged
@@ -76,4 +80,17 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './module.json,./${{ steps.get-download-output.outputs.download }}'
         tag: live
+    - name: Get Latest Changes
+      shell: bash
+      id: get-latest-changes
+      run: echo "::set-output name=changes::$(node ./.github/workflows/get-latest-changes.js)"
+    - name: Post Discord Release
+      uses: sarisia/actions-status-discord@v1
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        nodetail: true
+        noprefix: true
+        title: ${{ steps.get-module-name.outputs.name }} Release ${{ steps.get-version.outputs.version }}
+        description: ${{ steps.get-latest-changes.outputs.changes }}
+        color: 0x0000ff
 
