@@ -14,6 +14,8 @@ var changelog = fs.readFileSync('latest-changes.md', 'utf8');
 if(!process.argv[2]){
     changelog += `
 
+Buy me a coffee: https://ko-fi.com/blitzkraig
+
 Archived Manifest Link: ${newValues.manifest}`;
 } else if(process.argv[2] == 'dev') {
     changelog = `# Dev Release: Unstable!
