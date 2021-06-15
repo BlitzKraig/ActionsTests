@@ -96,7 +96,6 @@ jobs:
         nodetail: true
         noprefix: true
         title: ${{ steps.get-module-name.outputs.name }} Release ${{ steps.get-version.outputs.version }}
-        description: | 
-          ${{ steps.get-latest-changes.outputs.changes }}
+        description: ${{ steps.get-latest-changes.outputs.changes }}
         color: 0x0000ff
 
