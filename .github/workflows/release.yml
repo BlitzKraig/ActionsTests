@@ -83,7 +83,6 @@ jobs:
     - name: Get Latest Changes
       shell: bash
       id: get-latest-changes
-      run: echo "::set-output name=changes::$(cat ./.github/workflows/get-latest-changes.js)"
       run: |
         CHANGES=$(cat ./.github/workflows/get-latest-changes.js)
         CHANGES="${CHANGES//'%'/'%25'}"
