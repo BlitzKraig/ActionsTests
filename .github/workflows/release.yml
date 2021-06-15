@@ -84,7 +84,7 @@ jobs:
       shell: bash
       id: get-latest-changes
       run: |
-        CHANGES=$(cat ./.github/workflows/get-latest-changes.js)
+        CHANGES=$(cat ./latest-changes.md)
         CHANGES="${CHANGES//'%'/'%25'}"
         CHANGES="${CHANGES//$'\n'/'%0A'}"
         CHANGES="${CHANGES//$'\r'/'%0D'}"
