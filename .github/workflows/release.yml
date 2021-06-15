@@ -83,7 +83,13 @@ jobs:
     - name: Get Latest Changes
       shell: bash
       id: get-latest-changes
-      run: echo "::set-output name=changes::$(node ./.github/workflows/get-latest-changes.js)"
+      run: echo "::set-output name=changes::$(cat ./.github/workflows/get-latest-changes.js)"
+      run: |
+        CHANGES=$(cat ./.github/workflows/get-latest-changes.js)
+        CHANGES="${CHANGES//'%'/'%25'}"
+        CHANGES="${CHANGES//$'\n'/'%0A'}"
+        CHANGES="${CHANGES//$'\r'/'%0D'}"
+        echo "::set-output name=changes::$CHANGES"
     - name: Post Discord Release
       uses: sarisia/actions-status-discord@v1
       with:
@@ -92,16 +98,6 @@ jobs:
         noprefix: true
         title: ${{ steps.get-module-name.outputs.name }} Release ${{ steps.get-version.outputs.version }}
         description: | 
-          # Latest Release
-
-## New Features!
-
-* Added the ability to travel through time
-* Added the ability to travel through space
-* Added the ability to travel through time *and* space...
-* Updated for FVTT version 0.9.5
-
-Ciao!
-
+          ${{ steps.get-latest-changes.outputs.changes }}
         color: 0x0000ff
 
